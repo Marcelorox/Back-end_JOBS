@@ -14,12 +14,12 @@ model User {
   password  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  techs     Tech[]
+  jobs     Job[]
 
   @@map("user")
 }
 
-model Tech {
+model Job {
   id          String   @unique @default(uuid())
   name        String
   description String
@@ -28,7 +28,7 @@ model Tech {
   user        User?    @relation(fields: [userId], references: [id])
   userId      String
 
-  @@map("tech")
+  @@map("job")
 }
 
 model Application {

@@ -6,16 +6,23 @@ export async function GET({ params }: { params: { userId: string } }) {
 
   const { userId } = params;
 
-  const userWithTechs = await prisma.user.findUnique({
+  const userWithJobs = await prisma.user.findUnique({
     where: {
       id: userId,
     },
     include: {
-      techs: true,
+      jobs: true,
     },
   });
+  
+  if(!userWithJobs){
+    return NextResponse.json(
+      { error: "user not found" },
+      { status: 404 }
+    );
+  }
 
-  return NextResponse.json(userWithTechs?.techs);
+  return NextResponse.json(userWithJobs?.jobs);
 }
 
 export async function POST(
@@ -32,7 +39,7 @@ export async function POST(
 
   const { name, description } = await request.json();
 
-  const tech = await prisma.tech.create({
+  const tech = await prisma.job.create({
     data: {
       name: name as string,
       description: description as string,
