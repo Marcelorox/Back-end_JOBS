@@ -37,9 +37,9 @@ model Application {
   name        String
   email       String
   createdAt   DateTime @default(now())
-  job         Job?    @relation(fields: [userId], references: [id])
+  job         Job?    @relation(fields: [jobId], references: [id])
   updatedAt   DateTime @updatedAt
-  userId      String
+  jobId      String
 
   @@map("application")
 }

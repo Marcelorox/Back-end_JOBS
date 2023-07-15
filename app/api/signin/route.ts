@@ -47,6 +47,7 @@ export async function POST(req: NextRequest) {
   const token = await new jose.SignJWT(payload).setProtectedHeader({ alg: 'HS256', typ: 'JWT' }).sign(secret)
 
   return NextResponse.json({
+    id: user.id,
     accessToken: token
   });
 }
