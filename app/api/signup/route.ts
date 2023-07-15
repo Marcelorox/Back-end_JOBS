@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import * as argon2 from "argon2";
 import { PrismaClient } from "@prisma/client";
-import { useReducer } from "react";
 
 export interface AuthRequest {
   email: string;
