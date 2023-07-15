@@ -1,15 +1,16 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, User } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest,{ params }: { params: { userId: string } }) {
-    const prisma = new PrismaClient();
+export async function GET(req: NextRequest, { params }: { params: { userId: string } }) {
+  const prisma = new PrismaClient();
 
-    console.log(params.userId);
-    const jobs = await prisma.job.findMany({
-        where:{
-            userId: params.userId,
-        }
-    })
-  
-    return NextResponse.json(jobs);
+  const jobs = await prisma.job.findMany({
+    where: {
+      userId: params.userId,
+    },
+  });
+
+  return NextResponse.json(jobs);
 }
+
+
