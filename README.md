@@ -16,9 +16,9 @@ The base URL for all endpoints is `http://localhost:3000/api/`.
 
 ```json
 {
-  "email": "marcelo@mail.com",
-  "password": "marcelo",
-  "username": "rocha"
+	"email": "marcelos@mail.com",
+	"password": "marcelo",
+	"username":	"rocha"
 }
 ```
 
@@ -26,8 +26,7 @@ The base URL for all endpoints is `http://localhost:3000/api/`.
 
 ```json
 {
-  "authToken": "<your_auth_token>",
-  "id": "553670a6-823e-4c20-8b43-f534999e222f"
+	"message": "user created with successful"
 }
 ```
 
