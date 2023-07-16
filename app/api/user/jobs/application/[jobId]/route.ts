@@ -4,27 +4,30 @@ import { NextRequest, NextResponse } from "next/server";
 const prisma = new PrismaClient();
 
 export async function GET(
-  req: NextRequest,
-  {
-    params,
-  }: {
-    params: { jobId: string };
+    req: NextRequest,
+    {
+      params,
+    }: {
+      params: { jobId: string };
+    }
+  ) {   
+    const { jobId } = params;
+  
+    const userWithApplication = await prisma.application.findMany({
+      where: {
+        jobId: jobId,
+      },
+    });
+  
+    if (!userWithApplication) {
+      return NextResponse.json({ error: "job not found" }, { status: 404 });
+    }
+  
+    return NextResponse.json(userWithApplication);
   }
-) {
-  const { jobId } = params;
 
-  const userWithApplication = await prisma.application.findMany({
-    where: {
-      jobId: jobId,
-    },
-  });
 
-  if (!userWithApplication) {
-    return NextResponse.json({ error: "job not found" }, { status: 404 });
-  }
 
-  return NextResponse.json(userWithApplication);
-}
 
 export async function POST(
   request: NextRequest,
@@ -34,6 +37,8 @@ export async function POST(
     params: { jobId: string };
   }
 ) {
+
+
   const { jobId } = params;
 
   const { name, email } = await request.json();
@@ -53,23 +58,19 @@ export async function POST(
   return NextResponse.json(apply);
 }
 
-export async function DELETE(
-  request: NextRequest,
-  { params }: { params: { applicationId: string } }
-) {
-  const { applicationId } = params;
 
-  const existingJob = await prisma.application.findUnique({
-    where: { id: applicationId as string },
-  });
-
-  if (!existingJob) {
-    return NextResponse.json({ error: "Job not found" }, { status: 404 });
+export async function DELETE(req: NextRequest, { params }: { params: { applicationId: string } }) {
+    try {
+      const { applicationId } = params;
+  
+      const deleteJob = await prisma.application.delete({
+        where: { id: applicationId as string },
+      });
+  
+      return NextResponse.json(deleteJob);
+    } catch (error) {
+      console.error(error);
+      return NextResponse.json("Something went wrong.", { status: 500 });
+    }
   }
-
-  const deleteJob = await prisma.application.delete({
-    where: { id: applicationId as string },
-  });
-
-  return NextResponse.json(deleteJob);
-}
+  
