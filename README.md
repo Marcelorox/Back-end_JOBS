@@ -209,7 +209,7 @@ The base URL for all endpoints is `http://localhost:3000/api/`.
 }
 ```
 
-## Delete Application
+## Delete Apply
 
 - Path: `/user/jobs/application/:id`
 - Method: `DELETE`
@@ -223,7 +223,7 @@ The base URL for all endpoints is `http://localhost:3000/api/`.
 }
 ```
 
-## Get All Applications for Job
+## Get All Apply for Job
 
 - Path: `/user/jobs/:jobId`
 - Method: `GET`
