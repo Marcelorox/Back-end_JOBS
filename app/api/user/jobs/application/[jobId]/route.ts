@@ -24,38 +24,6 @@ export async function GET(
     }
   
     return NextResponse.json(userWithApplication);
-  }
-
-
-
-
-export async function POST(
-  request: NextRequest,
-  {
-    params,
-  }: {
-    params: { jobId: string };
-  }
-) {
-
-
-  const { jobId } = params;
-
-  const { name, email } = await request.json();
-
-  const apply = await prisma.application.create({
-    data: {
-      name: name as string,
-      email: email as string,
-      job: {
-        connect: {
-          id: jobId,
-        },
-      },
-    },
-  });
-
-  return NextResponse.json(apply);
 }
 
 
@@ -66,11 +34,10 @@ export async function DELETE(req: NextRequest, { params }: { params: { applicati
       const deleteJob = await prisma.application.delete({
         where: { id: applicationId as string },
       });
-  
       return NextResponse.json(deleteJob);
     } catch (error) {
       console.error(error);
-      return NextResponse.json("Something went wrong.", { status: 500 });
+      return NextResponse.json("applicationId required.", { status: 500 });
     }
   }
   
