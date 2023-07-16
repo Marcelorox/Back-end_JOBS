@@ -189,16 +189,16 @@ The base URL for all endpoints is `http://localhost:3000/api/`.
 
 ## Apply to Job
 
-- Path: `/user/jobs/application/:jobId`
+- Path: `/jobs/apply/:jobId`
 - Method: `POST`
 - Content-Type: `application/json`
-- Auth Token Required
 
 **Request Body**
 
 ```json
 {
-  "authToken": "<your_auth_token>"
+  "name": "rocha",
+  "email": "marcelo.paladino01@gmail.com"
 }
 ```
 
