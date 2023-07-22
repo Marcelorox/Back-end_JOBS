@@ -12,5 +12,3 @@ export async function GET(req: NextRequest, { params }: { params: { userId: stri
 
   return NextResponse.json(jobs);
 }
-
-

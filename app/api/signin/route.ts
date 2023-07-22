@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 import { AuthRequest } from "../signup/route";
 import * as argon2 from "argon2";
-import * as jose from 'jose'
+import * as jose from "jose";
 
 export async function POST(req: NextRequest) {
   const prisma = new PrismaClient();
@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
 
   if (!user) {
     return NextResponse.json(
-      { error: "email does not exists" },
+      { error: "email or password is incorrect" },
       { status: 401 }
     );
   }
@@ -39,15 +39,17 @@ export async function POST(req: NextRequest) {
 
   const payload = {
     email: user.email,
-    id: user.id
-  }
+    id: user.id,
+  };
 
-  const secret = Buffer.from(process.env.JWT_SECRET || '', 'utf8')
+  const secret = Buffer.from(process.env.JWT_SECRET || "", "utf8");
 
-  const token = await new jose.SignJWT(payload).setProtectedHeader({ alg: 'HS256', typ: 'JWT' }).sign(secret)
+  const token = await new jose.SignJWT(payload)
+    .setProtectedHeader({ alg: "HS256", typ: "JWT" })
+    .sign(secret);
 
   return NextResponse.json({
     id: user.id,
-    accessToken: token
+    accessToken: token,
   });
 }
